@@ -57,6 +57,23 @@ func MapFilterSlice[T any, U comparable](xs []T, f func(T) U) []U {
 	return ys
 }
 
+func MapSliceResult[T, U any](xs []T, f func(T) (U, error)) ([]U, error) {
+	if xs == nil {
+		return nil, nil
+	}
+
+	ys := make([]U, len(xs))
+	for i, x := range xs {
+		if y, err := f(x); err != nil {
+			return nil, err
+		} else {
+			ys[i] = y
+		}
+	}
+
+	return ys, nil
+}
+
 func Unique[T comparable](xs []T) []T {
 	if xs == nil {
 		return nil
