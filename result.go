@@ -17,3 +17,7 @@ func ZeroError[T any](t T, err error) T {
 
 	return t
 }
+
+func JustError[T any](_ T, err error) error {
+	return err
+}
