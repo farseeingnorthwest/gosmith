@@ -8,6 +8,12 @@ func Void[T any, U any](f func(T) U) func(T) {
 	}
 }
 
+func Return[T any](t T) func() T {
+	return func() T {
+		return t
+	}
+}
+
 func Must(err error) {
 	if err != nil {
 		panic(err)

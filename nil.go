@@ -16,10 +16,18 @@ func OrZero[T any](t *T) T {
 	return *t
 }
 
-func OrElse[T any](t *T, f func() T) T {
-	if t == nil {
-		return f()
+func OrElse[T comparable](t T, fs ...func() T) T {
+	for _, f := range fs {
+		if !IsZero(t) {
+			break
+		}
+
+		t = f()
 	}
 
-	return *t
+	return t
+}
+
+func IsZero[T comparable](t T) bool {
+	return t == Zero[T]()
 }
