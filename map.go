@@ -54,3 +54,32 @@ func MapFilterKeyValues[K comparable, U any, V comparable](m map[K]U, f func(K, 
 
 	return ys
 }
+
+func MapValues[K comparable, U, V any](m map[K]U, f func(U) V) map[K]V {
+	if m == nil {
+		return nil
+	}
+
+	n := make(map[K]V, len(m))
+	for k, v := range m {
+		n[k] = f(v)
+	}
+
+	return n
+}
+
+func MapFilterValues[K comparable, U any, V comparable](m map[K]U, f func(U) V) map[K]V {
+	if m == nil {
+		return nil
+	}
+
+	var z V
+	n := make(map[K]V, len(m))
+	for k, v := range m {
+		if y := f(v); y != z {
+			n[k] = y
+		}
+	}
+
+	return n
+}
