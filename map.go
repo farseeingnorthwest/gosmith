@@ -83,3 +83,64 @@ func MapFilterKeyValues[K comparable, U any, V comparable](m map[K]U, f func(K, 
 
 	return n
 }
+
+func IndexBy[T any, U comparable](xs []T, f func(T) U) map[U]T {
+	if xs == nil {
+		return nil
+	}
+
+	m := make(map[U]T, len(xs))
+	for _, x := range xs {
+		m[f(x)] = x
+	}
+
+	return m
+}
+
+func IndexFilterBy[T any, U comparable](xs []T, f func(T) U) map[U]T {
+	if xs == nil {
+		return nil
+	}
+
+	var z U
+	m := make(map[U]T, len(xs))
+	for _, x := range xs {
+		i := f(x)
+		if i != z {
+			m[i] = x
+		}
+	}
+
+	return m
+}
+
+func CollectBy[T any, U comparable](xs []T, f func(T) U) map[U][]T {
+	if xs == nil {
+		return nil
+	}
+
+	m := make(map[U][]T)
+	for _, x := range xs {
+		i := f(x)
+		m[i] = append(m[i], x)
+	}
+
+	return m
+}
+
+func CollectFilterBy[T any, U comparable](xs []T, f func(T) U) map[U][]T {
+	if xs == nil {
+		return nil
+	}
+
+	var z U
+	m := make(map[U][]T)
+	for _, x := range xs {
+		i := f(x)
+		if i != z {
+			m[i] = append(m[i], x)
+		}
+	}
+
+	return m
+}

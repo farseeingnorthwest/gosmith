@@ -91,33 +91,6 @@ func Unique[T comparable](xs []T) []T {
 	return ys
 }
 
-func IndexBy[T any, U comparable](xs []T, f func(T) U) map[U]T {
-	if xs == nil {
-		return nil
-	}
-
-	m := make(map[U]T, len(xs))
-	for _, x := range xs {
-		m[f(x)] = x
-	}
-
-	return m
-}
-
-func CollectBy[T any, U comparable](xs []T, f func(T) U) map[U][]T {
-	if xs == nil {
-		return nil
-	}
-
-	m := make(map[U][]T)
-	for _, x := range xs {
-		i := f(x)
-		m[i] = append(m[i], x)
-	}
-
-	return m
-}
-
 func All[T any](xs []T, f func(T) bool) bool {
 	for _, x := range xs {
 		if !f(x) {
